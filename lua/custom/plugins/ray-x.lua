@@ -6,6 +6,7 @@ return {
     'nvim-treesitter/nvim-treesitter',
   },
   opts = {
+    gomodifytags_transform = 'camelcase',
     -- lsp_keymaps = false,
     -- other options
   },
