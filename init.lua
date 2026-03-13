@@ -1017,9 +1017,22 @@ require('lazy').setup({
       highlight = { enable = true },
       indent = { enable = true },
       auto_install = true,
+      additional_vim_regex_highlighting = false,
     },
     config = function(_, opts)
       require('nvim-treesitter').setup(opts)
+
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = '*',
+        callback = function(args)
+          if opts.highlight and opts.highlight.enable then
+            local lang = vim.treesitter.language.get_lang(args.match)
+            if lang then
+              pcall(vim.treesitter.start, args.buf)
+            end
+          end
+        end,
+      })
     end,
   },
 
