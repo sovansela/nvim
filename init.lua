@@ -394,7 +394,7 @@ require('lazy').setup({
       notify_on_error = false,
       format_on_save = function(_)
         return {
-          timeout_ms = 500,
+          timeout_ms = 2000,
           lsp_format = 'never',
         }
       end,
