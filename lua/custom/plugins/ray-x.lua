@@ -5,23 +5,27 @@ return {
     'neovim/nvim-lspconfig',
     'nvim-treesitter/nvim-treesitter',
   },
+
+  ft = { 'go', 'gomod' },
+
   opts = {
     gomodifytags_transform = 'camelcase',
-    -- lsp_keymaps = false,
-    -- other options
   },
-  config = function(lp, opts)
+
+  config = function(_, opts)
     require('go').setup(opts)
-    local format_sync_grp = vim.api.nvim_create_augroup('GoFormat', {})
+
+    -- format on save (sync, safe)
+    local group = vim.api.nvim_create_augroup('GoFormat', { clear = true })
+
     vim.api.nvim_create_autocmd('BufWritePre', {
+      group = group,
       pattern = '*.go',
       callback = function()
-        require('go.format').goimports()
+        require('go.format').goimports { async = false }
       end,
-      group = format_sync_grp,
     })
   end,
-  event = { 'CmdlineEnter' },
-  ft = { 'go', 'gomod' },
-  build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
+
+  build = ':lua require("go.install").update_all_sync()',
 }
