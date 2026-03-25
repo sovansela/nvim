@@ -506,6 +506,7 @@ require('lazy').setup({
   require 'custom.plugins.grug-far',
   require 'custom.plugins.zed-mode',
   require 'custom.plugins.ray-x',
+  require 'custom.plugins.render-markdown',
 }, {
   ui = {
     icons = vim.g.have_nerd_font and {} or {
