@@ -171,6 +171,10 @@ require('lazy').setup({
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
 
+      -- Flutter telescope extensions
+      vim.keymap.set('n', '<leader>fc', require('telescope').extensions.flutter.commands, { desc = '[F]lutter Commands' })
+      vim.keymap.set('n', '<leader>fv', require('telescope').extensions.flutter.fvm, { desc = '[F]lutter FVM Versions' })
+
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
@@ -474,9 +478,11 @@ require('lazy').setup({
     lazy = false,
     dependencies = {
       'nvim-lua/plenary.nvim',
+      'stevearc/dressing.nvim',
     },
     config = function()
       require('flutter-tools').setup {
+        fvm = true,
         debugger = {
           enabled = true,
         },
@@ -490,6 +496,7 @@ require('lazy').setup({
           },
         },
       }
+      require('telescope').load_extension('flutter')
     end,
   },
   {
