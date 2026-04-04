@@ -43,6 +43,16 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'dart',
+  callback = function()
+    vim.bo.tabstop = 2
+    vim.bo.shiftwidth = 2
+    vim.bo.softtabstop = 2
+    vim.bo.expandtab = true
+  end,
+})
+
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
@@ -349,11 +359,13 @@ require('lazy').setup({
             },
           },
         },
+        dart = {},
       }
 
-      local ensure_installed = vim.tbl_keys(servers or {})
+      local       ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua',
+        'dart-format',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -361,6 +373,7 @@ require('lazy').setup({
         ensure_installed = {
           'angularls',
           'eslint',
+          'dart',
         },
         automatic_installation = false,
         handlers = {
@@ -401,6 +414,7 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         go = { 'goimports' },
+        dart = { 'dart-format' },
       },
     },
   },
@@ -458,6 +472,29 @@ require('lazy').setup({
   },
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
   {
+    'nvim-flutter/flutter-tools.nvim',
+    lazy = false,
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+    config = function()
+      require('flutter-tools').setup {
+        debugger = {
+          enabled = true,
+        },
+        ui = {
+          border = 'rounded',
+        },
+        decorations = {
+          statusline = {
+            app_version = true,
+            device = true,
+          },
+        },
+      }
+    end,
+  },
+  {
     'echasnovski/mini.nvim',
     config = function()
       require('mini.ai').setup { n_lines = 500 }
@@ -474,7 +511,7 @@ require('lazy').setup({
     event = { 'BufReadPost', 'BufNewFile' },
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'lua', 'go', 'vim', 'markdown' },
+      ensure_installed = { 'lua', 'go', 'vim', 'markdown', 'dart' },
       highlight = { enable = true },
       indent = { enable = true },
       auto_install = true,
