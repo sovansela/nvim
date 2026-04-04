@@ -372,7 +372,6 @@ require('lazy').setup({
         ensure_installed = {
           'angularls',
           'eslint',
-          'dart',
         },
         automatic_installation = false,
         handlers = {
