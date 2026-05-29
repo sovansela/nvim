@@ -496,7 +496,7 @@ require('lazy').setup({
           },
         },
       }
-      require('telescope').load_extension('flutter')
+      require('telescope').load_extension 'flutter'
     end,
   },
   {
@@ -516,7 +516,7 @@ require('lazy').setup({
     event = { 'BufReadPost', 'BufNewFile' },
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'lua', 'go', 'vim', 'markdown', 'dart' },
+      ensure_installed = { 'lua', 'go', 'vim', 'markdown', 'dart', 'astro', 'typescript', 'tsx', 'javascript', 'html', 'css' },
       highlight = { enable = true },
       indent = { enable = true },
       auto_install = true,
