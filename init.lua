@@ -364,6 +364,8 @@ require('lazy').setup({
           },
         },
         dart = {},
+        astro = {},
+        ts_ls = {},
       }
 
       local ensure_installed = vim.tbl_keys(servers or {})
